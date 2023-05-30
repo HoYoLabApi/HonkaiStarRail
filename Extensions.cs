@@ -4,16 +4,6 @@ namespace HoYoLabApi.HonkaiStarRail;
 
 public static class Extensions
 {
-	public static string GetHsrLang(this Language language)
-	{
-		return language switch
-		{
-			Language.English => "en",
-			Language.Russian => "ru",
-			_ => "en"
-		};
-	}
-	
 	public static string GetHsrRegion(this Region region)
 	{
 		return region switch
