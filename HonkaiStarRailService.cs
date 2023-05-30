@@ -1,4 +1,5 @@
-﻿using HoYoLabApi.interfaces;
+﻿using HoYoLabApi.Enums;
+using HoYoLabApi.interfaces;
 using HoYoLabApi.Static;
 
 namespace HoYoLabApi.HonkaiStarRail;
@@ -49,6 +50,8 @@ public class HonkaiStarRailService : HonkaiStarRailServiceBase
 
 	public IAsyncEnumerable<ICodeClaimResult> CodesClaimAsync(
 		string[] codes,
-		CancellationToken? cancellationToken)
-		=> base.CodesClaimAsync(Client.Cookies!, codes, cancellationToken);
+		string? cookies = null,
+		Region? region = null,
+		CancellationToken? cancellationToken = null)
+		=> base.CodesClaimAsync(cookies?.ParseCookies() ?? Client.Cookies!, codes, region, cancellationToken);
 }
