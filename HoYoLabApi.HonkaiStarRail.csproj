@@ -12,7 +12,7 @@
         <RepositoryUrl>https://github.com/HoYoLabApi/HonkaiStarRail</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>hoyolab hoyoverse hsr honakaistarrail starrail honkai</PackageTags>
-        <Version>1.1.0</Version>
+        <Version>1.2.1</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
