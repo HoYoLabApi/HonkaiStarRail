@@ -5,6 +5,22 @@
         <Nullable>enable</Nullable>
         <TargetFrameworks>net7.0;net6.0;net6.0-windows;net7.0-windows</TargetFrameworks>
         <LangVersion>10</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>HoYoLabApi.HonkaiStarRail</Title>
+        <Authors>Satan1c</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/HoYoLabApi/HonkaiStarRail</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>hoyolab hoyoverse hsr honakaistarrail starrail honkai</PackageTags>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     </PropertyGroup>
 
     <ItemGroup>
