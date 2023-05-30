@@ -1,5 +1,6 @@
 ﻿using HoYoLabApi.Enums;
 using HoYoLabApi.interfaces;
+using HoYoLabApi.Models;
 using HoYoLabApi.Static;
 
 namespace HoYoLabApi.HonkaiStarRail;
@@ -8,6 +9,11 @@ public class HonkaiStarRailService : HonkaiStarRailServiceBase
 {
 	public HonkaiStarRailService(IHoYoLabClient client) : base(client)
 	{
+	}
+	
+	public Task<GameData[]> GetGameAccountAsync(string? cookies = null)
+	{
+		return base.GetGameAccountAsync(cookies?.ParseCookies() ?? Client.Cookies!);
 	}
 
 	public async Task DailiesClaimAsync(ICookies[] cookies)
