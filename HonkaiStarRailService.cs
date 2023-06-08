@@ -11,7 +11,7 @@ public class HonkaiStarRailService : HonkaiStarRailServiceBase
 	{
 	}
 	
-	public Task<GameData[]> GetGameAccountAsync(string? cookies = null)
+	public Task<(IGameResponse, Headers)> GetGameAccountAsync(string? cookies = null)
 	{
 		return base.GetGameAccountAsync(cookies?.ParseCookies() ?? Client.Cookies!);
 	}
@@ -30,22 +30,22 @@ public class HonkaiStarRailService : HonkaiStarRailServiceBase
 		}
 	}
 
-	public Task<IDailyClaimResult> DailyClaimAsync(string cookies)
+	public Task<(IDailyClaimResult, Headers)> DailyClaimAsync(string cookies)
 	{
 		return base.DailyClaimAsync(cookies.ParseCookies());
 	}
 
-	public Task<IDailyClaimResult> DailyClaimAsync()
+	public Task<(IDailyClaimResult result, Headers headers)> DailyClaimAsync()
 	{
 		return base.DailyClaimAsync(Client.Cookies!);
 	}
 
-	public Task<ICodeClaimResult> CodeClaimAsync(string code)
+	public Task<(ICodeClaimResult, Headers)> CodeClaimAsync(string code)
 	{
 		return base.CodeClaimAsync(Client.Cookies!, code);
 	}
 
-	public IAsyncEnumerable<IDailyClaimResult> DailiesClaimAsync(string[] cookies, CancellationToken? cancellationToken)
+	public IAsyncEnumerable<(IDailyClaimResult, Headers)> DailiesClaimAsync(string[] cookies, CancellationToken? cancellationToken)
 	{
 		return base.DailiesClaimAsync(cookies.Select(x => x.ParseCookies()).ToArray(), cancellationToken);
 	}
@@ -60,7 +60,7 @@ public class HonkaiStarRailService : HonkaiStarRailServiceBase
 		return DailiesClaimAsync(cookies.Select(x => x.ParseCookies()).ToArray());
 	}
 
-	public IAsyncEnumerable<ICodeClaimResult> CodesClaimAsync(
+	public IAsyncEnumerable<(ICodeClaimResult, Headers)> CodesClaimAsync(
 		string[] codes,
 		string? cookies = null,
 		Region? region = null,
