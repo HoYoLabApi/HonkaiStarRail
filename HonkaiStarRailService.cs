@@ -1,54 +1,29 @@
-﻿using HoYoLabApi.interfaces;
+﻿using HoYoLabApi.Classes;
+using HoYoLabApi.interfaces;
+using HoYoLabApi.Models;
 using HoYoLabApi.Static;
 
 namespace HoYoLabApi.HonkaiStarRail;
 
-public class HonkaiStarRailService : HonkaiStarRailServiceBase
+public class HonkaiStarRailService : ServiceBase
 {
-	public HonkaiStarRailService(IHoYoLabClient client) : base(client)
+	private const string gameCode = "hkrpg_global";
+	
+	private static readonly Func<GameData, ClaimRequest> s_codeClaim = (GameData? gameAcc)
+		=> ClaimRequest.FromData(gameAcc, "sg-hkrpg-api", gameAcc?.Region.GetHsrRegion());
+
+	private static readonly ClaimRequest s_dailyClaim = new(
+		"sg-public-api",
+		"event/luna/os/sign",
+		"e202303301540311"
+	);
+	
+	public HonkaiStarRailService(IHoYoLabClient client) : base(client, s_codeClaim, s_dailyClaim)
 	{
 	}
 	
-	public async Task DailiesClaimAsync(ICookies[] cookies)
+	public Task<IGameResponse> GetGameAccountAsync(string? cookies = null)
 	{
-		await foreach (var _ in DailiesClaimAsync(cookies, null))
-		{
-		}
+		return base.GetGameAccountAsync(cookies?.ParseCookies() ?? Client.Cookies!, gameCode);
 	}
-	
-	public async Task CodesClaimAsync(ICookies cookies, string[] codes)
-	{
-		await foreach (var _ in CodesClaimAsync(cookies, codes, null))
-		{
-		}
-	}
-	
-	public Task<IDailyClaimResult> DailyClaimAsync(string cookies)
-		=> base.DailyClaimAsync(cookies.ParseCookies());
-	
-	public Task<IDailyClaimResult> DailyClaimAsync()
-		=> base.DailyClaimAsync(Client.Cookies!);
-
-	public Task<ICodeClaimResult> CodeClaimAsync(string code)
-		=> base.CodeClaimAsync(Client.Cookies!, code);
-	
-	public IAsyncEnumerable<IDailyClaimResult> DailiesClaimAsync(string[] cookies, CancellationToken? cancellationToken)
-		=> base.DailiesClaimAsync(cookies.Select(x => x.ParseCookies()).ToArray(), cancellationToken);
-
-	public Task CodesClaimAsync(string cookies, string[] codes)
-		=> CodesClaimAsync(cookies.ParseCookies(), codes);
-
-	public Task DailiesClaimAsync(string[] cookies)
-		=> DailiesClaimAsync(cookies.Select(x => x.ParseCookies()).ToArray());
-
-	public IAsyncEnumerable<ICodeClaimResult> CodesClaimAsync(
-		string cookies,
-		string[] codes,
-		CancellationToken? cancellationToken)
-		=> base.CodesClaimAsync(cookies.ParseCookies(), codes, cancellationToken);
-
-	public IAsyncEnumerable<ICodeClaimResult> CodesClaimAsync(
-		string[] codes,
-		CancellationToken? cancellationToken)
-		=> base.CodesClaimAsync(Client.Cookies!, codes, cancellationToken);
 }
